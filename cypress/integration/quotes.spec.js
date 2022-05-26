@@ -73,4 +73,27 @@ describe("Quotes App", () => {
       submitBtn().should("be.disabled");
     })
   })
+
+  describe("Adding a new quote", () => {
+    it("can submit and delete a new quote", () => {
+      textInput().type("CSS rulez");
+      authorInput().type("Casey");
+      submitBtn().click();
+      /**
+       * It's important that state be the same at the beginning of each test.
+       * We need to delete our extraneous (sp???) data
+       */
+      cy.contains("CSS rulez").siblings("button:nth-of-type(2)").click();
+      cy.contains("CSS rulez").should("not.exist");
+    })
+
+    it("variation of submitting a new quote", () => {
+      textInput().type("Lorem ipsum");
+      authorInput().type("Casey");
+      submitBtn().click();
+      cy.contains("Lorem ipsum").should("exist");
+      cy.contains("Lorem ipsum").next().next().click();
+      cy.contains("Lorem ipsum").should("not.exist");
+    })
+  })
 })
