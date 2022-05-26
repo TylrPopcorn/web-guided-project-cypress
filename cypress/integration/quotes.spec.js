@@ -59,8 +59,18 @@ describe("Quotes App", () => {
     })
 
     it("the submit button enables when both inputs are filled out", () => {
+      authorInput().type("Casey");
+      textInput().type("Lorem ipsum");
+      submitBtn().should("not.be.disabled");
+    })
 
-      // submitBtn().should("not.be.disabled");
+    it("the cancel button resets the inputs and the submit button ends up disabled", () => {
+      authorInput().type("Casey");
+      textInput().type("But my code is perrrrrrrfect!");
+      cancelBtn().click();
+      textInput().should("have.value", "");
+      authorInput().should("have.value", "");
+      submitBtn().should("be.disabled");
     })
   })
 })
