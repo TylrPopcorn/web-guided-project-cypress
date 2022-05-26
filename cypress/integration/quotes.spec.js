@@ -14,4 +14,53 @@ describe("Quotes App", () => {
   const foobarInput = () => cy.get("input[name=foobar]");
   const submitBtn = () => cy.get(`button[id="submitBtn"]`);
   const cancelBtn = () => cy.get(`button[id="cancelBtn"]`);
+
+  it("sanity check to make sure tests work", () => {
+    // "it" is a test
+    // "expect" is an assertion
+    // There can be multiple assertions per test,
+    // but they all need to relate to the "one thing" we're testing
+    expect(1 + 2).to.equal(3);
+    expect(2 + 2).not.to.equal(5); // strict => ===
+    expect({}).not.to.equal({}); // TRUE
+    expect({}).to.eql({}); // TRUE loose => ==
+  })
+
+  it("the proper elements are showing", () => {
+    textInput().should("exist");
+    authorInput().should("exist");
+    foobarInput().should("not.exist");
+    submitBtn().should("exist");
+    cancelBtn().should("exist");
+
+    cy.contains("Submit Quote").should("exist");
+    cy.contains(/submit quote/i).should("exist");
+  })
+
+  describe("Filling out the inputs and cancelling", () => {
+    // We can use optional "describe" blocks to organize / group our tests
+    it("can navigate to the site", () => {
+      cy.url().should("include", "localhost");
+    })
+
+    it("submit button starts out disabled", () => {
+      submitBtn().should("be.disabled");
+    })
+
+    it("can type in the inputs", () => {
+      textInput()
+        .should("have.value", "")
+        .type("CSS is the BEST")
+        .should("have.value", "CSS is the BEST");
+      authorInput()
+        .should("have.value", "")
+        .type("CRHarding")
+        .should("have.value", "CRHarding");
+    })
+
+    it("the submit button enables when both inputs are filled out", () => {
+
+      // submitBtn().should("not.be.disabled");
+    })
+  })
 })
