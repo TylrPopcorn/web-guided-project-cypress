@@ -96,4 +96,21 @@ describe("Quotes App", () => {
       cy.contains("Lorem ipsum").should("not.exist");
     })
   })
+
+  describe("Editing an existing quote", () => {
+    it("can edit a quote", () => {
+      textInput().type("CSS is hard");
+      authorInput().type("Casey");
+      submitBtn().click();
+      cy.contains("CSS is hard").siblings("button:nth-of-type(1)").click();
+      textInput().should("have.value", "CSS is hard");
+      authorInput().should("have.value", "Casey");
+      textInput().type(" for real."); // CSS is hard for real.
+      authorInput().type(" Harding"); // Casey Harding
+      submitBtn().click();
+      cy.contains("CSS is hard for real. (Casey Harding)");
+      cy.contains("CSS is hard for real. (Casey Harding)").next().next().click();
+      cy.contains("CSS is hard for real. (Casey Harding)").should("not.exist");
+    })
+  })
 })
