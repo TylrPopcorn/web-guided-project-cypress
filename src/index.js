@@ -7,3 +7,7 @@ ReactDOM.render(
   <Container />,
   document.querySelector('#root'),
 )
+
+//Unit tests -> Component
+//Integration tests -> Components talking to each other
+//End to end tests -> Entire use flow
